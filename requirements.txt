@@ -66,7 +66,6 @@ pydeck==0.6.2
 python-math==0.0.1
 pytz==2021.1
 PyWavelets==1.1.1
-pywin32==227
 pywinpty==0.5.7
 PyYAML==5.4.1
 pyzmq==20.0.0
