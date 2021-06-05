@@ -7,7 +7,6 @@ from glob import glob
 from sklearn.metrics import classification_report
 from sklearn.model_selection import train_test_split
 import glob
-import torch
 import os
 import time
 import math
@@ -20,9 +19,9 @@ import base64
 import plotly.graph_objects as go
 
 
-from retinaface.pre_trained_models import get_model as get_detector
+#from retinaface.pre_trained_models import get_model as get_detector
 model = tf.keras.models.load_model('my_model1.h5')
-face_detector = get_detector("resnet50_2020-07-20", max_size=800)
+#face_detector = get_detector("resnet50_2020-07-20", max_size=800)
 
 data = pickle.loads(open("encodings.pickle", "rb").read())
 detector = pickle.loads(open("detector.pickle", "rb").read())
@@ -34,7 +33,7 @@ def face_recognise(frame):
     r = frame.shape[1] / float(rgb.shape[1])
 
 
-    boxes = face_recognition.face_locations(rgb,model=face_detector)
+    boxes = face_recognition.face_locations(rgb,model=detector)
     encodings = face_recognition.face_encodings(rgb, boxes)
     names = []
 
