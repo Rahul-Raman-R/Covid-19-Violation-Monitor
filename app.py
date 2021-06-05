@@ -19,9 +19,9 @@ import base64
 import plotly.graph_objects as go
 
 
-#from retinaface.pre_trained_models import get_model as get_detector
+from retinaface.pre_trained_models import get_model as get_detector
 model = tf.lite.TFLiteConverter.from_keras_model('my_model1.h5')
-#face_detector = get_detector("resnet50_2020-07-20", max_size=800)
+detector = get_detector("resnet50_2020-07-20", max_size=800)
 
 #data = pickle.loads(open("encodings.pickle", "rb").read())
 detector = pickle.loads(open("detector.pickle", "rb").read())
