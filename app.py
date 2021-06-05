@@ -20,7 +20,7 @@ import plotly.graph_objects as go
 
 
 #from retinaface.pre_trained_models import get_model as get_detector
-model = tf.keras.models.load_model('my_model1.h5')
+model = tf.lite.TFLiteConverter.from_keras_model('my_model1.h5')
 #face_detector = get_detector("resnet50_2020-07-20", max_size=800)
 
 #data = pickle.loads(open("encodings.pickle", "rb").read())
