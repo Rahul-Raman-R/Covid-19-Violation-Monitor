@@ -12,7 +12,7 @@ import time
 import math
 import pickle
 from imutils.video import VideoStream
-#import face_recognition
+import face_recognition
 import imutils
 import pandas as pd
 import base64
@@ -23,64 +23,64 @@ import plotly.graph_objects as go
 model = tf.lite.TFLiteConverter.from_keras_model('my_model1.h5')
 #detector = get_detector("resnet50_2020-07-20", max_size=800)
 
-#data = pickle.loads(open("encodings.pickle", "rb").read())
+data = pickle.loads(open("encodings.pickle", "rb").read())
 detector = pickle.loads(open("detector.pickle", "rb").read())
-#caught=[]
-#def face_recognise(frame):
+caught=[]
+def face_recognise(frame):
 
-    #rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-    #rgb = imutils.resize(frame, width=750)
-    #r = frame.shape[1] / float(rgb.shape[1])
-
-
-    #boxes = face_recognition.face_locations(rgb,model=detector)
-    #encodings = face_recognition.face_encodings(rgb, boxes)
-    #names = []
+    rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+    rgb = imutils.resize(frame, width=750)
+    r = frame.shape[1] / float(rgb.shape[1])
 
 
-    #for encoding in encodings:
-        #name1=0
-        #matches = face_recognition.compare_faces(data["encodings"],
-            #encoding)
-        #print(matches)
-        #name = "Unknown"
+    boxes = face_recognition.face_locations(rgb,model=detector)
+    encodings = face_recognition.face_encodings(rgb, boxes)
+    names = []
 
 
-        #if True in matches:
+    for encoding in encodings:
+        name1=0
+        matches = face_recognition.compare_faces(data["encodings"],
+            encoding)
+        print(matches)
+        name = "Unknown"
 
-            #matchedIdxs = [i for (i, b) in enumerate(matches) if b]
-            #counts = {}
+
+        if True in matches:
+
+            matchedIND = [i for (i, b) in enumerate(matches) if b]
+            counts = {}
 
 
-            #for i in matchedIdxs:
-                #name = data["names"][i]
-                #counts[name] = counts.get(name, 0) + 1
-                #print(counts)
+            for i in matchedIND:
+                name = data["names"][i]
+                counts[name] = counts.get(name, 0) + 1
+                print(counts)
 
-            #name = max(counts, key=counts.get)
-            #name1 = max(counts.values()) 
-            #print(name1)
-        #if(name1>5):
-            #names.append(name)
-        #else:
-            #names.append("Unknown")
+            name = max(counts, key=counts.get)
+            name1 = max(counts.values()) 
+            print(name1)
+        if(name1>5):
+            names.append(name)
+        else:
+            names.append("Unknown")
 
     
-    #for ((top, right, bottom, left), name) in zip(boxes, names):
+    for ((top, right, bottom, left), name) in zip(boxes, names):
 
-        #top = int(top * r)
-        #right = int(right * r)
-        #bottom = int(bottom * r)
-        #left = int(left * r)
+        top = int(top * r)
+        right = int(right * r)
+        bottom = int(bottom * r)
+        left = int(left * r)
 
 
-        ##cv2.rectangle(frame, (left, top), (right, bottom),
-         ##   (0, 255, 0), 2)
-        #y = top - 15 if top - 15 > 15 else top + 15
-        #cv2.putText(frame, name, (left, bottom+25), cv2.FONT_HERSHEY_SIMPLEX,
-            #0.75, (0, 255, 0), 2)
-        #caught.append(name)
-    #return frame
+        #cv2.rectangle(frame, (left, top), (right, bottom),
+         #   (0, 255, 0), 2)
+        y = top - 15 if top - 15 > 15 else top + 15
+        cv2.putText(frame, name, (left, bottom+25), cv2.FONT_HERSHEY_SIMPLEX,
+            0.75, (0, 255, 0), 2)
+        caught.append(name)
+    return frame
 
 class_map = {
     0: 'With mask',
@@ -118,13 +118,13 @@ def visualize_detections_video(image, boxes, mask, nomask,maskper,nomaskper):
       face_image = tf.image.resize(face_image, [image_w, image_h])
       face_image = face_image/127.5-1
       
-      _cls = model.predict(np.expand_dims(face_image,axis=0))
-      _cls = np.argmax(_cls,axis=1)
-      if _cls[0] == 0:
+      clas = model.predict(np.expand_dims(face_image,axis=0))
+      clas = np.argmax(clas,axis=1)
+      if clas[0] == 0:
         count_mask=count_mask+1
-      elif _cls[0] == 1:
+      elif clas[0] == 1:
         count_nomask= count_nomask+1    
-      text = '{}'.format(class_map[_cls[0]])    
+      text = '{}'.format(class_map[clas[0]])    
       start = tuple(np.array((x,y)).astype('int'))
       end = tuple(np.array((x+w,y+h)).astype('int'))
       mask.text("TOTAL WITH MASK:"+"                                        "+(str(count_mask)))
@@ -133,8 +133,8 @@ def visualize_detections_video(image, boxes, mask, nomask,maskper,nomaskper):
       nomaskperc=(count_nomask/(count_mask+count_nomask))*100  
       maskper.text("MASKED % :"+"                                              "+(str(maskperc)))
       nomaskper.text("WITHOUT MASK % :"+"                                        "+(str(nomaskperc)))  
-      cv2.rectangle(image,start,end,color_map_video[_cls[0]],2)
-      cv2.putText(image, class_map[_cls[0]], start , cv2.FONT_HERSHEY_SIMPLEX, 0.70, color_map_video[_cls[0]], 2)
+      cv2.rectangle(image,start,end,color_map_video[clas[0]],2)
+      cv2.putText(image, class_map[clas[0]], start , cv2.FONT_HERSHEY_SIMPLEX, 0.70, color_map_video[clas[0]], 2)
   return image, maskperc, nomaskperc
 
 def social_dist(img,textp1,textp2,textp3,high, safe):
@@ -386,7 +386,7 @@ def main():
                         img_array.append(img)
                     start = time.time()
                     #print(start)
-            print(namearr)
+            #print(namearr)
             mask_avg=sum(maskarr)
             mask_avg= (mask_avg/len(maskarr))
             #st.text("AVERAGE MASK PERCENTAGE:"+(str(int(mask_avg))))
@@ -400,11 +400,11 @@ def main():
             high_avg= (high_avg/len(higharr))
             #st.text("AVERAGE SOCIAL DISTANCE VIOLATION PERCENTAGE:"+(str(100-int(safe_avg))))
             #out = cv2.VideoWriter('demo_.avi', 0, 24, (h,w))
-            #namelist=list(dict.fromkeys(caught))
+            namelist=list(dict.fromkeys(caught))
             #s=" ; "
             #s=s.join(namelist)
             #st.text("FACES RECOGNIZED WITHOUT MASK:" + s)
-            #data1=pd.DataFrame(namelist, columns=["RECOGNIZED PEOPLE"])
+            data1=pd.DataFrame(namelist, columns=["RECOGNIZED PEOPLE"])
             my_dict={'ANALYSIS':["AVERAGE MASK PERCENTAGE:","AVERAGE WITHOUT-MASK PERCENTAGE:","AVERAGE SOCIAL DISTANCE MAINTAINED PERCENTAGE:","AVERAGE SOCIAL DISTANCE VIOLATION PERCENTAGE:"],'SUMMARY %':[(int(mask_avg)),(int(nomask_avg)),(int(safe_avg)),(100-int(safe_avg))]}
             df=pd.DataFrame(my_dict)
             sub_title = '<p style=" font-type:bold; color:#faca2b; font-size: 25px;">STATISTICAL REPORT</p>'
@@ -420,28 +420,28 @@ def main():
 
             fig.update_yaxes(automargin=True)
             ##fig.update_layout(margin=dict(l=0,r=0,b=0,t=0),paper_bgcolor='seagreen',font=dict(family="Courier New, monospace",size=16,))      
-            #fig1 = go.Figure(data=[go.Table(header=dict(values=list(data1.columns),fill_color='darkslategray',align='left'),cells=dict(values=[data1['RECOGNIZED PEOPLE']],fill_color='teal',align='left',height=30))])
-            #fig1.update_layout(
-    #autosize=False,
-    #width=300,
-    #height=300,
-    #margin=dict(l=2,r=2,b=2,t=2),
-    #paper_bgcolor='teal',
-    #font=dict(family="Courier New, monospace",size=16)
-#)
+            fig1 = go.Figure(data=[go.Table(header=dict(values=list(data1.columns),fill_color='darkslategray',align='left'),cells=dict(values=[data1['RECOGNIZED PEOPLE']],fill_color='teal',align='left',height=30))])
+            fig1.update_layout(
+    autosize=False,
+    width=300,
+    height=300,
+    margin=dict(l=2,r=2,b=2,t=2),
+    paper_bgcolor='teal',
+    font=dict(family="Courier New, monospace",size=16)
+)
             st.write(fig)
-            #st.write(fig1)
+            st.write(fig1)
             st.markdown(get_table_download_link1(df), unsafe_allow_html=True)
-            #st.markdown(get_table_download_link2(data1), unsafe_allow_html=True)
+            st.markdown(get_table_download_link2(data1), unsafe_allow_html=True)
             for i in range(len(img_array)):
                 for _ in range(10): 
                     out.write(img_array[i])
             for i in range(len(img_array1)):
                 for _ in range(10): 
                     out.write(img_array1[i])
-            #for i in range(len(img_arr2)):
-                #for _ in range(10): 
-                    #out.write(img_arr2[i])
+            for i in range(len(img_arr2)):
+                for _ in range(10): 
+                    out.write(img_arr2[i])
             out.release()
             cap.release()
                                
