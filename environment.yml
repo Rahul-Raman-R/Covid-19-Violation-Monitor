@@ -4,14 +4,15 @@
      - dlib
      - numpy
      - scipy
-     - opencv-python-headless
      - face_recognition
      - pandas
-     - tensorflow-cpu
-     - torch
-     - tensorflow
      - imutils
      - plotly
-     - retinaface
-     - scikit_learn
      - streamlit
+     - pip:
+       - retinaface
+       - opencv-python-headless
+       - scikit_learn
+       - tensorflow-cpu
+       - torch
+       
