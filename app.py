@@ -302,19 +302,19 @@ def main():
     path1 = './my_model.h5'
     path2 = './yolov3.weights'
 
-    decoder_url = 'wget https://www.dropbox.com/s/7meuxh8a6iul0e0/my_model1.h5?dl=0'
+    decoder_url = 'wget -o ./my_model1.h5 https://www.dropbox.com/s/7meuxh8a6iul0e0/my_model1.h5?dl=0'
 
     with st.spinner('done!\nmodel was not found, downloading them...'):
        os.system(decoder_url)
        print("Model 1 is here.")
 
-    encoder_url = 'wget https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+    encoder_url = 'wget ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
     with st.spinner('Downloading yolo weights'):
        os.system(encoder_url)
     
     
-    #model_path='./my_model.h5'
-    #model = torch.load(model_path)
+    model_path='./my_model.h5'
+    model = torch.load(model_path)
     #weights_path='./yolov3.weights'
     #yolov3_weights=torch.load(weights_path)
     main_bg = "static/back1.jpg"
@@ -335,13 +335,13 @@ def main():
 
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
-    model = tf.keras.models.load_model('my_model1.h5')
+    #model = tf.keras.models.load_model('my_model1.h5')
     # For checkpoint saved elsewhere
     #checkpoint = 'https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
     #model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
     detector = get_detector("resnet50_2020-07-20", max_size=800)
     data = pickle.loads(open("encodings.pickle", "rb").read())
-    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
+    net = cv2.dnn.readNet("/yolov3.weights", "yolov3.cfg")
     if choice == 'Upload':
         sub_title = '<p style=" font-type:bold; font-size: 20px;">Here you can upload a video file(.mp4) that you wish to check for violations.</p>'
         st.markdown(sub_title, unsafe_allow_html=True)
