@@ -27,30 +27,7 @@ from retinaface.pre_trained_models import get_model as get_detector
 
 #data = pickle.loads(open("encodings.pickle", "rb").read())
 #detector = pickle.loads(open("detector.pickle", "rb").read())
-def download_data():
-    
-    path1 = './my_model.h5'
-    path2 = './yolov3.weights'
-    
-    # Local
-    # path1 = './data/LastModelResnet50_v2_16.pth.tar'
-    # path2 = './data/resnet50_captioning.pt'
-    # print("I am here.")
-    
-    if not os.path.exists(path1):
-        decoder_url = 'wget -O ./my_model.h5 https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
-        
-        with st.spinner('done!\nmodel was not found, downloading them...'):
-            os.system(decoder_url)
-    else:
-        print("Model 1 is here.")
 
-    if not os.path.exists(path2):
-        encoder_url = 'wget -O ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
-        with st.spinner('Downloading yolo weights'):
-            os.system(encoder_url)
-    else:
-        print("Model 2 is here.")
         
         
 caught=[]
@@ -322,11 +299,30 @@ def main():
     """COVID-19 Violator App"""
     original_title = '<p style=" font-type:bold; color:#faca2b; font-size: 36px;">COVID-19 VIOLATION MONITOR</p>'
     st.markdown(original_title, unsafe_allow_html=True)
+    def download_data():
+        path1 = './my_model.h5'
+        path2 = './yolov3.weights'
+
+        if not os.path.exists(path1):
+            decoder_url = 'wget -O ./my_model.h5 https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+
+            with st.spinner('done!\nmodel was not found, downloading them...'):
+                os.system(decoder_url)
+        else:
+            print("Model 1 is here.")
+
+        if not os.path.exists(path2):
+            encoder_url = 'wget -O ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+            with st.spinner('Downloading yolo weights'):
+                os.system(encoder_url)
+        else:
+            print("Model 2 is here.")
+    
     download_data()
     model_path='./my_model.h5'
-    model = torch.load(model_path)
-    weights_path='./yolov3.weights'
-    yolov3_weights=torch.load(weights_path)
+    #model = torch.load(model_path)
+    #weights_path='./yolov3.weights'
+    #yolov3_weights=torch.load(weights_path)
     main_bg = "static/back1.jpg"
     main_bg_ext = "jpg"
     st.markdown(
@@ -345,10 +341,10 @@ def main():
 
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
-    #model = tf.keras.models.load_model('/my_model1.h5')
+    model = tf.keras.models.load_model('/my_model1.h5')
     detector = get_detector("resnet50_2020-07-20", max_size=800)
     data = pickle.loads(open("encodings.pickle", "rb").read())
-    net = cv2.dnn.readNet(yolov3_weights, "yolov3.cfg")
+    net = cv2.dnn.readNet("/yolov3.weights", "yolov3.cfg")
     if choice == 'Upload':
         sub_title = '<p style=" font-type:bold; font-size: 20px;">Here you can upload a video file(.mp4) that you wish to check for violations.</p>'
         st.markdown(sub_title, unsafe_allow_html=True)
