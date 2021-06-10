@@ -303,7 +303,7 @@ def main():
     path2 = './yolov3.weights'
 
     if not os.path.exists(path1):
-        decoder_url = 'wget -O ./my_model.h5 https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+        decoder_url = 'wget https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
 
         with st.spinner('done!\nmodel was not found, downloading them...'):
             os.system(decoder_url)
@@ -311,17 +311,17 @@ def main():
         print("Model 1 is here.")
 
     if not os.path.exists(path2):
-        encoder_url = 'wget -O ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+        encoder_url = 'wget https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
         with st.spinner('Downloading yolo weights'):
             os.system(encoder_url)
     else:
         print("Model 2 is here.")
     
     
-    model_path='./my_model.h5'
-    model = torch.load(model_path)
-    weights_path='./yolov3.weights'
-    yolov3_weights=torch.load(weights_path)
+    #model_path='./my_model.h5'
+    #model = torch.load(model_path)
+    #weights_path='./yolov3.weights'
+    #yolov3_weights=torch.load(weights_path)
     main_bg = "static/back1.jpg"
     main_bg_ext = "jpg"
     st.markdown(
@@ -340,13 +340,13 @@ def main():
 
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
-    #model = tf.keras.models.load_model('my_model1.h5')
+    model = tf.keras.models.load_model('my_model1.h5')
     # For checkpoint saved elsewhere
     #checkpoint = 'https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
     #model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
     detector = get_detector("resnet50_2020-07-20", max_size=800)
     data = pickle.loads(open("encodings.pickle", "rb").read())
-    net = cv2.dnn.readNet("/yolov3_weights", "yolov3.cfg")
+    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
     if choice == 'Upload':
         sub_title = '<p style=" font-type:bold; font-size: 20px;">Here you can upload a video file(.mp4) that you wish to check for violations.</p>'
         st.markdown(sub_title, unsafe_allow_html=True)
