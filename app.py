@@ -341,10 +341,10 @@ def main():
 
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
-    model = tf.keras.models.load_model('/my_model1.h5')
+    model = tf.keras.models.load_model('my_model1.h5')
     detector = get_detector("resnet50_2020-07-20", max_size=800)
     data = pickle.loads(open("encodings.pickle", "rb").read())
-    net = cv2.dnn.readNet("/yolov3.weights", "yolov3.cfg")
+    net = cv2.dnn.readNet("yolov3.weights", "yolov3.cfg")
     if choice == 'Upload':
         sub_title = '<p style=" font-type:bold; font-size: 20px;">Here you can upload a video file(.mp4) that you wish to check for violations.</p>'
         st.markdown(sub_title, unsafe_allow_html=True)
