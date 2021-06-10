@@ -313,8 +313,8 @@ def main():
        os.system(encoder_url)
     
     
-    model_path='my_model1.h5'
-    model = torch.load(model_path)
+    #model_path='my_model1.h5'
+    #model = torch.load(model_path)
     #weights_path='./yolov3.weights'
     #yolov3_weights=torch.load(weights_path)
     main_bg = "static/back1.jpg"
@@ -335,7 +335,7 @@ def main():
 
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
-    #model = tf.keras.models.load_model('my_model1.h5')
+    model = tf.keras.models.load_model('my_model1.h5')
     # For checkpoint saved elsewhere
     #checkpoint = 'https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
     #model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
