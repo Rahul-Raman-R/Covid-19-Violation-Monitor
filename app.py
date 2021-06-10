@@ -313,7 +313,7 @@ def main():
        os.system(encoder_url)
     
     
-    model_path='/my_model.h5'
+    model_path='/my_model1.h5'
     model = torch.load(model_path)
     #weights_path='./yolov3.weights'
     #yolov3_weights=torch.load(weights_path)
