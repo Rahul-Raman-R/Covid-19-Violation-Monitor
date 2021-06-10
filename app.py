@@ -301,16 +301,20 @@ def main():
     st.markdown(original_title, unsafe_allow_html=True)
     path1 = './my_model.h5'
     path2 = './yolov3.weights'
+    if not os.path.exists(path1):    
+            model_url = 'wget -O my_model1.h5 https://www.dropbox.com/s/7meuxh8a6iul0e0/my_model1.h5'
 
-    decoder_url = 'wget -O my_model1.h5 https://www.dropbox.com/s/7meuxh8a6iul0e0/my_model1.h5'
+            with st.spinner('done!\nmodel was not found, downloading them...'):
+               os.system(model_url)
+    else:
+        print("Model is here.")
 
-    with st.spinner('done!\nmodel was not found, downloading them...'):
-       os.system(decoder_url)
-       print("Model 1 is here.")
-
-    encoder_url = 'wget -O yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights'
-    with st.spinner('Downloading yolo weights'):
-       os.system(encoder_url)
+    if not os.path.exists(path2):    
+            yolo_url = 'wget -O yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights'
+            with st.spinner('Downloading yolo weights'):
+               os.system(yolo_url)
+    else:
+        print("yolo is here.")
     
     
     #model_path='my_model1.h5'
