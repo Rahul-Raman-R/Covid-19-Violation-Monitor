@@ -299,26 +299,25 @@ def main():
     """COVID-19 Violator App"""
     original_title = '<p style=" font-type:bold; color:#faca2b; font-size: 36px;">COVID-19 VIOLATION MONITOR</p>'
     st.markdown(original_title, unsafe_allow_html=True)
-    def download_data():
-        path1 = './my_model.h5'
-        path2 = './yolov3.weights'
+    path1 = './my_model.h5'
+    path2 = './yolov3.weights'
 
-        if not os.path.exists(path1):
-            decoder_url = 'wget -O ./my_model.h5 https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+    if not os.path.exists(path1):
+        decoder_url = 'wget -O ./my_model.h5 https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
 
-            with st.spinner('done!\nmodel was not found, downloading them...'):
-                os.system(decoder_url)
-        else:
-            print("Model 1 is here.")
+        with st.spinner('done!\nmodel was not found, downloading them...'):
+            os.system(decoder_url)
+    else:
+        print("Model 1 is here.")
 
-        if not os.path.exists(path2):
-            encoder_url = 'wget -O ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
-            with st.spinner('Downloading yolo weights'):
-                os.system(encoder_url)
-        else:
-            print("Model 2 is here.")
+    if not os.path.exists(path2):
+        encoder_url = 'wget -O ./yolov3.weights https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+        with st.spinner('Downloading yolo weights'):
+            os.system(encoder_url)
+    else:
+        print("Model 2 is here.")
     
-    download_data()
+    
     model_path='./my_model.h5'
     model = torch.load(model_path)
     weights_path='./yolov3.weights'
@@ -342,6 +341,9 @@ def main():
     activities = ["Upload","About"]
     choice = st.sidebar.selectbox("MENU",activities)
     #model = tf.keras.models.load_model('my_model1.h5')
+    # For checkpoint saved elsewhere
+    #checkpoint = 'https://www.dropbox.com/s/oeu6m85ahsw22ci/yolov3.weights?dl=0'
+    #model.load_state_dict(torch.hub.load_state_dict_from_url(checkpoint, progress=False))
     detector = get_detector("resnet50_2020-07-20", max_size=800)
     data = pickle.loads(open("encodings.pickle", "rb").read())
     net = cv2.dnn.readNet("/yolov3_weights", "yolov3.cfg")
