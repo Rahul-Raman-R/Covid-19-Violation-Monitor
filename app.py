@@ -319,7 +319,7 @@ def main():
     """COVID-19 Violator App"""
     original_title = '<p style=" font-type:bold; color:#faca2b; font-size: 36px;">COVID-19 VIOLATION MONITOR</p>'
     st.markdown(original_title, unsafe_allow_html=True)
-    
+    download_wget()
     #model_path='my_model1.h5'
     #model = torch.load(model_path)
     #weights_path='./yolov3.weights'
