@@ -168,10 +168,10 @@ def social_dist(net, img,textp1,textp2,textp3,high, safe):
         c_d = E_dist(p1, p2)
         
         calib = (p1[1] + p2[1]) / 2
-        if 0 < int(c_d) < 200:
+        if 0 < int(c_d) < 150:
             return 1
 
-        elif 200 < int(c_d) < 350:
+        elif 150 < int(c_d) < 250:
             return 2
 
         else:
