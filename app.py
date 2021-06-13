@@ -232,7 +232,7 @@ def social_dist(net, img,textp1,textp2,textp3,high, safe):
         for i in idf:            
             (x, y) = (boxes[i][0], boxes[i][1])            
             (w, h) = (boxes[i][2], boxes[i][3])            
-            center.append([int(x + w / 2), int(y + h / 2)])            
+            center.append([int((x + w) / 2), int((y + h) / 2)])            
             status.append(0)            
 
         for i in range(len(center)):            
