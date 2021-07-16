@@ -1,4 +1,0 @@
-build-essential
-cmake
-libstdc++6-7-dbg
-wget
