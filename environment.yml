@@ -5,6 +5,8 @@
      - numpy
      - scipy
      - opencv
+     - face_recognition
+     - dlib
      - pip 
      - pip:
        - pandas==1.1.5
@@ -15,7 +17,5 @@
        - torch
        - torchvision==0.9.1
        - retinaface-pytorch==0.0.7
-       - face_recognition
-       - dlib
        - wget
        - requests
