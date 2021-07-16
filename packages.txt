@@ -5,5 +5,5 @@ freeglut3-dev
 cmake
 libopenblas-dev
 wget
+gcc-4.9
 libstdc++6
-gcc-4.8
