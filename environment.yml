@@ -5,7 +5,7 @@
      - dlib
      - numpy
      - scipy
-     - libgcc
+     - libgcc==3.4.26
      - opencv
      - face_recognition
      - pip 
