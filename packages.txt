@@ -6,3 +6,4 @@ cmake
 libopenblas-dev
 wget
 libstdc++6
+gcc-4.9
