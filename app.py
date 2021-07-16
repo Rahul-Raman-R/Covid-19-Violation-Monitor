@@ -421,7 +421,7 @@ def main():
                         img_array.append(img)
                     start = time.time()
                     #print(start)
-            print(namearr)
+            #print(namearr)
             mask_avg=sum(maskarr)
             mask_avg= (mask_avg/len(maskarr))
             #st.text("AVERAGE MASK PERCENTAGE:"+(str(int(mask_avg))))
