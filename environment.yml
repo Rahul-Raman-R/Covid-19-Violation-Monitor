@@ -5,8 +5,6 @@
      - numpy
      - scipy
      - opencv
-     - face_recognition
-     - dlib
      - pip 
      - pip:
        - pandas==1.1.5
