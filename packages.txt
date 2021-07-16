@@ -1,5 +1,6 @@
 build-essential
-libgtk-all-dev
+gcc-4.9
+libgtk-3-dev
 libboost-all-dev
 freeglut3-dev
 cmake
