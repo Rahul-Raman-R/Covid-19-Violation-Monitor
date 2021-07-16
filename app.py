@@ -479,7 +479,7 @@ def main():
               #      out.write(img_arr2[i])
             out.release()
             cap.release()
-            del model, detector, data, net, img_array, img_array1, data1, df, maskarr, nomaskarr, higharr, safearr, cap 
+            del model, detector, data, net, img_array, img_array1, df, maskarr, nomaskarr, higharr, safearr, cap 
             gc.collect()
                                
     elif choice == 'About':
