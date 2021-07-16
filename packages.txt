@@ -1,7 +1,7 @@
 build-essential
-libgtk-4-dev
+libgtk-all-dev
 libboost-all-dev
-freeglut4-dev
+freeglut3-dev
 cmake
 libopenblas-dev
 wget
