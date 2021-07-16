@@ -1,4 +1,4 @@
 build-essential
 cmake
-libstdc++6-4.7-dev
+libstdc++6-7-dbg
 wget
